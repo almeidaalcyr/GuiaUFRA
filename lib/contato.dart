@@ -23,7 +23,6 @@ class Contato {
     }
 
     await prefs.setStringList("exibirPOI", exibirPOI!);
-
   }
 
   final String id;

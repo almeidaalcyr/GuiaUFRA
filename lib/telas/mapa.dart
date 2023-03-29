@@ -20,6 +20,7 @@ import 'package:provider/src/provider.dart';
 import '../assets/provider.dart';
 import '../contato.dart';
 import '../assets/marcador.dart';
+import '../assets/mapa_offline.dart';
 
 //import 'package:geolocator_platform_interface/src/enums/location_accuracy.dart' as geoL;
 
@@ -52,7 +53,7 @@ class _TelaMapaState extends State<TelaMapa> {
   static const String MAPBOX = "MAPBOX";
   static const String LANDSCAPE = "LANDSCAPE";
   static const String NEIGHBOURHOOD = "NEIGHBOURHOOD";
-  String mapaSelecionado = "padrão";
+  String mapaSelecionado = "OFFLINE";
   late TileLayerOptions mapa;
   setMapa(String m){
     switch(m){
@@ -71,18 +72,21 @@ class _TelaMapaState extends State<TelaMapa> {
         mapa = TileLayerOptions(
           //TODO: é necessário inserir a APIKEY
           urlTemplate: "https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=",
+          tileProvider: const CachedTileProvider(),
         );
         break;
       case NEIGHBOURHOOD:
         mapa = TileLayerOptions(
           //TODO: é necessário inserir a APIKEY
           urlTemplate: "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=",
+          tileProvider: const CachedTileProvider(),
         );
         break;
       default:
         mapa = TileLayerOptions(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: ['a', 'b', 'c']
+          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          subdomains: ['a', 'b', 'c'],
+          tileProvider: const CachedTileProvider(),
         );
         break;
     }
@@ -193,11 +197,12 @@ class _TelaMapaState extends State<TelaMapa> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: FlutterMap(
+          child: FlutterMap(
           options: MapOptions(
             zoom: 14.0,
             minZoom: 15.5,
             maxZoom: 18.0,
+
 
             //Limites do campus Belém
             nePanBoundary: geo.LatLng(-1.451167, -48.431376),
@@ -206,8 +211,10 @@ class _TelaMapaState extends State<TelaMapa> {
 
             center: new geo.LatLng(-1.458039, -48.438787),
           ),
+
           layers: [
             mapa,
+            //Text("Teste"),
             MarkerLayerOptions(
 
               markers: [
