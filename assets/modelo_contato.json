@@ -1,0 +1,33 @@
+    {
+        "sigla": "M",
+        "nome": "Modelo",
+        "telefone": [
+            "12345678901",
+            "23456789012"
+        ],
+        "email": [
+            "mail_1@mail.com.br",
+            "mail_2@mail.com.br"
+        ],
+        "site": ["https://ouvidoria.ufra.edu.br/"],
+        "rede_social": {
+            "facebook": "facebook",
+            "instagram": "instagram",
+            "whatsapp": "whatsapp",
+            "youtube": "youtube",
+            "telegram": "telegram",
+            "twitter": "twitter"
+        },
+        "icone": "icone",
+        "cor": "cor",
+        "coordenadas": [
+            {
+                "latitude": 123,
+                "longitude": 321
+            },
+            {
+                "latitude": 234,
+                "longitude": 432
+            }
+        ]
+    }

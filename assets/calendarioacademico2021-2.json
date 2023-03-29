@@ -1,0 +1,51 @@
+[
+    {
+        "evento": "evento passado",
+        "intervalo": [],
+        "datas": [
+            "2021-10-21"
+        ]
+    },
+
+    {
+        "evento": "evento atual",
+        "intervalo": [
+            "2021-10-19",
+            "2021-10-27"
+        ],
+        "datas": []
+    },
+    {
+        "evento": "inicia hoje",
+        "intervalo": [
+            "2021-10-22",
+            "2021-10-27"
+        ],
+        "datas": []
+    },
+
+    {
+        "evento": "evento hoje",
+        "intervalo": [],
+        "datas": [
+            "2021-10-22"
+        ]
+    },
+
+    {
+        "evento": "evento amanhã",
+        "intervalo": [],
+        "datas": [
+            "2021-10-23"
+        ]
+    },
+
+    {
+        "evento": "inicia amanhã",
+        "intervalo": [
+            "2021-10-23",
+            "2021-10-28"
+        ],
+        "datas": []
+    }
+]

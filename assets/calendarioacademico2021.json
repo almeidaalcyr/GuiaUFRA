@@ -1,0 +1,119 @@
+[
+    {
+        "evento": "Período de habilitação de matrícula (Aprovados no Processo Seletivo Especial)",
+        "intervalo": [
+            "2021-02-24",
+            "2021-02-25"
+        ],
+        "datas": null
+    },
+    {
+        "evento": "Ciclo de Palestras",
+        "intervalo": null,
+        "datas": [
+            "2021-04-08",
+            "2021-04-15",
+            "2021-04-22",
+            "2021-04-29"
+        ]
+    },
+    {
+        "evento": "Mês do Calouro",
+        "intervalo": null,
+        "datas": [
+            "2021-05-06",
+            "2021-05-13",
+            "2021-05-20",
+            "2021-05-27"
+        ]
+    },
+    {
+        "evento": "Período de habilitação de matrícula (Aprovados no Processo Seletivo Especial de VAGAS REMANESCENTES)",
+        "intervalo": [
+            "2021-05-20",
+            "2021-05-21"
+        ],
+        "datas": null
+    },
+    {
+        "evento": "Data limite para cadastro do Plano de Ensino (semestre 2021.1)",
+        "intervalo": null,
+        "datas": [
+            "2021-06-11"
+        ]
+    },
+    {
+        "evento": "Período de Aula Inaugural nos Polos",
+        "intervalo": null,
+        "datas": [
+            "2021-06-21"
+        ]
+    },
+    {
+        "evento": "Período de Atividades Presenciais (De acordo com programação de cada Polo)",
+        "intervalo": [
+            "2021-06-13",
+            "2021-06-25"
+        ],
+        "datas": null
+    },
+    {
+        "evento": "Término das aulas (semestre 2021.1)",
+        "intervalo": null,
+        "datas": [
+            "2021-10-02"
+        ]
+    },
+    {
+        "evento": "Data limite para lançamento das notas e consolidação parcial das turmas",
+        "intervalo": null,
+        "datas": [
+            "2021-10-04"
+        ]
+    },
+    {
+        "evento": "Período de avaliação final - NAF",
+        "intervalo": [
+            "2021-10-05",
+            "2021-10-08"
+        ],
+        "datas": null
+    },
+    {
+        "evento": "Data limite para lançamento das notas de NAF e consolidação final das turmas",
+        "intervalo": null,
+        "datas": [
+            "2021-10-09"
+        ]
+    },
+    {
+        "evento": "Período de matrícula ON-LINE (semestre 2021.2)",
+        "intervalo": [
+            "2021-10-18",
+            "2021-10-22"
+        ],
+        "datas": null
+    },
+    {
+        "evento": "Data limite para cadastro do Plano de Ensino (semestre 2021.2)",
+        "intervalo": null,
+        "datas": [
+            "2021-10-27"
+        ]
+    },
+    {
+        "evento": "Período de Reajuste de Matrícula ON-LINE (semestre 2021.2)",
+        "intervalo": [
+            "2021-11-03",
+            "2021-11-05"
+        ],
+        "datas": null
+    },
+    {
+        "evento": "Início das aulas (semestre 2021.2)",
+        "intervalo": null,
+        "datas": [
+            "2021-11-08"
+        ]
+    }
+]

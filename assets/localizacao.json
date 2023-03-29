@@ -1,0 +1,1060 @@
+[
+    {
+        "sigla": "",
+        "nome": "Centro Docente II",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.458841,
+                "longitude": -48.435546
+            }
+        ]
+    },
+
+    {
+        "sigla": "STIC",
+        "nome": "Superintendência de Tecnologia da Informação e Comunicação",
+        "icone": "escola",
+        "cor": "vermelho",
+        "site": ["https://stic.ufra.edu.br/"],
+        "twitter": "SticUfra",
+        "coordenadas": [
+            {
+                "latitude": -1.45459342523224,
+                "longitude": -48.436827063560486
+            }
+        ]
+    },
+    
+    {
+        "sigla": "STIC/DAUS",
+        "nome": "Divisão de Atendimento ao Usuário",
+        "telefone": [
+            "91984888478"
+        ],
+        "email": [
+            "daus@ufra.edu.br"
+        ],
+        "icone": "escola",
+        "cor": "vermelho",
+        "whatsapp": "91984888478",
+        "coordenadas": [
+            {
+                "latitude": -1.45459342523224,
+                "longitude": -48.436827063560486
+            }
+        ]
+    },
+    
+    {
+        "sigla": "STIC/DGTI",
+        "nome": "Divisão de Gestão em Tecnologia da Informação",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.45459342523224,
+                "longitude": -48.436827063560486
+            }
+        ]
+    },
+    
+    {
+        "nome": "Ouvidoria",
+        "telefone": [
+            "91991899539"
+        ],
+        "email": [
+            "ouvidoria@ufra.edu.br",
+            "ouvidoria@outlook.com"
+        ],
+        "site": ["https://ouvidoria.ufra.edu.br/"],
+        "facebook": "ouv.ufra",
+        "instagram": "ouvidoria.ufra",
+        "whatsapp": "91991899539",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4542716638465603,
+                "longitude": -48.44491124153138
+            }
+        ]
+    },
+    {
+        "sigla": "LTPF",
+        "nome": "Laboratório de Tecnologia de Produtos Florestais\n'Prédio da Madeira'",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4530811463207498,
+                "longitude": -48.43587756156922
+            }
+        ]
+    },
+    {
+        "sigla": "DSG",
+        "nome": "Divisão de Serviços Gerais",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4574517368596323,
+                "longitude": -48.43615651130676
+            }
+        ]
+    },
+    {
+        "sigla": "RU",
+        "nome": "Restaurante Universitário",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.456865,
+                "longitude": -48.433747
+            }
+        ]
+    },
+    {
+        "nome": "Várzea",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4648,
+                "longitude": -48.4342
+            }
+        ]
+    },
+    {
+        "nome": "Acesso - pedestres",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.45481,
+                "longitude": -48.44595
+            }
+        ]
+    },
+    {
+        "nome": "Biofauna",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4575053636847923,
+                "longitude": -48.4387636184693
+            }
+        ]
+    },
+    {
+        "nome": "Ginásio",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4552047717386207,
+                "longitude": -48.44532966613775
+            }
+        ]
+    },
+    {
+        "sigla": "DSQV",
+        "nome": "Divisão de Saúde e Qualidade de Vida",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4545183475796806,
+                "longitude": -48.4454369544983
+            }
+        ]
+    },
+    {
+        "nome": "Pavilhão de Salas de Aula",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4540678816118953,
+                "longitude": -48.44497025012971
+            }
+        ]
+    },
+    {
+        "nome": "Solos",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4534136332604934,
+                "longitude": -48.44332337379456
+            }
+        ]
+    },
+    {
+        "nome": "Projeto Carroceiro",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4522821049267172,
+                "longitude": -48.44065725803375
+            }
+        ]
+    },
+    {
+        "sigla": "ICA",
+        "nome": "Instituto de Ciências Agrárias",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4543681922670808,
+                "longitude": -48.43873143196107
+            }
+        ]
+    },
+    {
+        "nome": "Reitoria",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.454126871208038,
+                "longitude": -48.437283039093025
+            }
+        ]
+    },
+    {
+        "nome": "Piscina",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4541161458270346,
+                "longitude": -48.4454369544983
+            }
+        ]
+    },
+    {
+        "sigla": "",
+        "nome": "Acesso - carros",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4562210008715402,
+                "longitude": -48.44563275575638
+            }
+        ]
+    },
+    {
+        "sigla": "SINDIFES",
+        "nome": "Sindicato dos Trabalhadores nas Instituições Federais de Ensino",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4551109246979557,
+                "longitude": -48.4445920586586
+            }
+        ]
+    },
+    {
+        "nome": "Escola E. Prof Virgílio Libonati",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4525770531251971,
+                "longitude": -48.443712294101715
+            }
+        ]
+    },
+    {
+        "nome": "Stihl",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.454437907234889,
+                "longitude": -48.439085483551025
+            }
+        ]
+    },
+    {
+        "sigla": "CPCOP",
+        "nome": "Centro de Pesquisas em Caprinos e Ovinos do Pará",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4530596955487685,
+                "longitude": -48.437245488166816
+            }
+        ]
+    },
+    {
+        "nome": "Zootecnia Básica",
+        "icone": "escola",
+        "cor": "vermelho",
+        "coordenadas": [
+            {
+                "latitude": -1.4526789443120947,
+                "longitude": -48.436784148216255
+            }
+        ]
+    },
+    {
+        "sigla": "ACESSAR",
+        "nome": "Núcleo Amazônico de Acessibilidade, Inclusão e Tecnologia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4528130116562645,
+                "longitude": -48.43389809131623
+            }
+        ]
+    },
+    {
+        "nome": "Zootecnia Proficional",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4534189959526744,
+                "longitude": -48.4336405992508
+            }
+        ]
+    },
+    {
+        "nome": "Moinho",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4524054469053027,
+                "longitude": -48.43342602252961
+            }
+        ]
+    },
+    {
+        "nome": "Fábrica de Ração",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4522821049267172,
+                "longitude": -48.43398392200471
+            }
+        ]
+    },
+    {
+        "nome": "Ordenha de Bubalino",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4515742290933067,
+                "longitude": -48.43383371829987
+            }
+        ]
+    },
+    {
+        "nome": "Suinocultura",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4516117679688152,
+                "longitude": -48.43649983406067
+            }
+        ]
+    },
+    {
+        "nome": "Cunicultura",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4508234514520624,
+                "longitude": -48.43585073947907
+            }
+        ]
+    },
+    {
+        "nome": "Sala dos Conselhos",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.453933814342227,
+                "longitude": -48.437441289424896
+            }
+        ]
+    },
+    {
+        "nome": "Almoxarifado",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4538855501231946,
+                "longitude": -48.43718111515045
+            }
+        ]
+    },
+    {
+        "sigla": "PROGEP",
+        "nome": "Pro-Reitoria de Gestão de Pessoas",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4541375965889907,
+                "longitude": -48.43702286481858
+            }
+        ]
+    },
+    {
+        "sigla": "SPM",
+        "nome": "Galpão da Superintendência de Patrimônio e Material",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4541804981122797,
+                "longitude": -48.436762690544136
+            }
+        ]
+    },
+    {
+        "nome": "Centro Docente",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.454590743887549,
+                "longitude": -48.436620533466346
+            }
+        ]
+    },
+    {
+        "sigla": "DCAD",
+        "nome": "Divisão de Capacitação e Desenvolvimento",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4548454716189674,
+                "longitude": -48.43646496534348
+            }
+        ]
+    },
+    {
+        "sigla": "",
+        "nome": "Estufa",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4548132954860584,
+                "longitude": -48.435603976249695
+            }
+        ]
+    },
+    {
+        "nome": "Biblioteca",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4562129568432556,
+                "longitude": -48.43410462141038
+            }
+        ]
+    },
+    {
+        "sigla": "RU",
+        "nome": "ANTIGO Restaurante Universitário",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.456454277679087,
+                "longitude": -48.43371838331223
+            }
+        ]
+    },
+    {
+        "sigla": "SAGA",
+        "nome": "Serviço de Atendimento de Animais de Grande Porte",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4567894454637547,
+                "longitude": -48.431497514247894
+            }
+        ]
+    },
+    {
+        "nome": "Patologia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.456942281957018,
+                "longitude": -48.431097865104675
+            }
+        ]
+    },
+    {
+        "nome": "Zoologia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.457513407708459,
+                "longitude": -48.43154579401017
+            }
+        ]
+    },
+    {
+        "nome": "Curral",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4573257138155065,
+                "longitude": -48.43217074871064
+            }
+        ]
+    },
+    {
+        "nome": "Canil - Gatil",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4579558289656414,
+                "longitude": -48.43209832906724
+            }
+        ]
+    },
+    {
+        "sigla": "ISPA",
+        "nome": "Instituto da Saúde e Produção Animal",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.458052357228381,
+                "longitude": -48.432414829730995
+            }
+        ]
+    },
+    {
+        "nome": "Coordenação de Veterinária",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4582480950817833,
+                "longitude": -48.432750105857856
+            }
+        ]
+    },
+    {
+        "nome": "Laboratório de Anatomia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4583875247752067,
+                "longitude": -48.43299686908722
+            }
+        ]
+    },
+    {
+        "nome": "Laboratório de Histologia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4583392606515404,
+                "longitude": -48.43292176723481
+            }
+        ]
+    },
+    {
+        "sigla": "",
+        "nome": "Laboratório de Anatomia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4584599209587663,
+                "longitude": -48.43310415744782
+            }
+        ]
+    },
+    {
+        "sigla": "HOVET",
+        "nome": "Hospital Veterinário",
+        "telefone": [
+            "91996035720",
+            "91999685141"
+        ],
+        "email": [
+            "hovet@ufra,edu.br"
+        ],
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4585618118798334,
+                "longitude": -48.433313369750984
+            }
+        ]
+    },
+    {
+        "nome": "Vida Dígna",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4587066042334031,
+                "longitude": -48.43352794647217
+            }
+        ]
+    },
+    {
+        "nome": "Prédio Central",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4588299458605758,
+                "longitude": -48.434520363807685
+            }
+        ]
+    },
+    {
+        "nome": "RUzinho",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4583124472490554,
+                "longitude": -48.43485832214356
+            }
+        ]
+    },
+    {
+        "nome": "Chaves - Lanche",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4593930271161268,
+                "longitude": -48.43512654304505
+            }
+        ]
+    },
+    {
+        "sigla": "CEPNOR",
+        "nome": "Centro Nacioanl de Pesquisa e Conservação de Biodiversidade Marinha do Norte",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.459481511300609,
+                "longitude": -48.43550473451615
+            }
+        ]
+    },
+    {
+        "sigla": "ISARH",
+        "nome": "Engenharia de Pesca",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.459650435643133,
+                "longitude": -48.43595802783966
+            }
+        ]
+    },
+    {
+        "sigla": "CTA",
+        "nome": "Centro de Tecnologia Agropecuária",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4597067437545002,
+                "longitude": -48.436279892921455
+            }
+        ]
+    },
+    {
+        "sigla": "",
+        "nome": "LIBRAS",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.459886393433678,
+                "longitude": -48.43659907579422
+            }
+        ]
+    },
+    {
+        "sigla": "CQMMA",
+        "nome": "Centro de Qualidade e Monitoramento Ambiental da Amazônia",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4586208013583337,
+                "longitude": -48.436837792396545
+            }
+        ]
+    },
+    {
+        "nome": "Engenharia Ambiental",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4583124472490554,
+                "longitude": -48.436553478240974
+            }
+        ]
+    },
+    {
+        "nome": "Prefeitura",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.458148885486986,
+                "longitude": -48.43620210886002
+            }
+        ]
+    },
+    {
+        "sigla": "BB",
+        "nome": "Banco do Brasil DESATIVADO",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4579129275142075,
+                "longitude": -48.43578904867173
+            }
+        ]
+    },
+    {
+        "nome": "Garagem",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4577225523135984,
+                "longitude": -48.435429632663734
+            }
+        ]
+    },
+    {
+        "sigla": "ASCOM",
+        "nome": "Assessoria de Comunicação",
+        "icone": "",
+        "cor": "",
+        "coordenadas": [
+            {
+                "latitude": -1.4568672043826747,
+                "longitude": -48.434380888938904
+            }
+        ]
+    },
+    {
+        "sigla": " ",
+        "nome": "Parada do Bagé",
+        "icone": "onibus",
+        "cor": "azul",
+        "coordenadas": [
+            {
+                "latitude": -1.4548454716189674,
+                "longitude": -48.44561398029328
+            },
+            {
+                "latitude": -1.4532473897967473,
+                "longitude": -48.44360232353211
+            },
+            {
+                "latitude": -1.4524108095998756,
+                "longitude": -48.440780639648445
+            },
+            {
+                "latitude": -1.4540035293234441,
+                "longitude": -48.43836665153504
+            },
+            {
+                "latitude": -1.4549956268998125,
+                "longitude": -48.43688607215882
+            },
+            {
+                "latitude": -1.4566795104358816,
+                "longitude": -48.43433260917664
+            },
+            {
+                "latitude": -1.4568886551184612,
+                "longitude": -48.43404293060303
+            },
+            {
+                "latitude": -1.4579558289656414,
+                "longitude": -48.43281447887421
+            },
+            {
+                "latitude": -1.4590337276645808,
+                "longitude": -48.43439161777496
+            },
+            {
+                "latitude": -1.459779139895593,
+                "longitude": -48.43595266342163
+            },
+            {
+                "latitude": -1.4600365483784021,
+                "longitude": -48.43651056289673
+            },
+            {
+                "latitude": -1.4585939879592074,
+                "longitude": -48.43651056289673
+            },
+            {
+                "latitude": -1.4580255438224865,
+                "longitude": -48.43572199344636
+            },
+            {
+                "latitude": -1.452882726672099,
+                "longitude": -48.43696117401124
+            },
+            {
+                "latitude": -1.4528988147523698,
+                "longitude": -48.43589365482331
+            },
+            {
+                "latitude": -1.4533063794143144,
+                "longitude": -48.43372106552124
+            }
+        ]
+    },
+    {
+        "sigla": " ",
+        "nome": "Wifi institucional",
+        "icone": "wifi",
+        "cor": "verde",
+        "coordenadas": [
+            {
+                "latitude": -1.455035,
+                "longitude": -48.438864
+            },
+            {
+                "latitude": -1.453932,
+                "longitude": -48.437182
+            },
+            {
+                "latitude": -1.45404,
+                "longitude": -48.43719
+            },
+            {
+                "latitude": -1.454089,
+                "longitude": -48.437435
+            },
+            {
+                "latitude": -1.458518,
+                "longitude": -48.433281
+            },
+            {
+                "latitude": -1.457418,
+                "longitude": -48.431703
+            },
+            {
+                "latitude": -1.459824,
+                "longitude": -48.436656
+            },
+            {
+                "latitude": -1.454041,
+                "longitude": -48.445022
+            },
+            {
+                "latitude": -1.458263,
+                "longitude": -48.432737
+            },
+            {
+                "latitude": -1.454854,
+                "longitude": -48.436478
+            },
+            {
+                "latitude": -1.453461,
+                "longitude": -48.433694
+            },
+            {
+                "latitude": -1.453294,
+                "longitude": -48.433333
+            },
+            {
+                "latitude": -1.457963,
+                "longitude": -48.432442
+            },
+            {
+                "latitude": -1.455840,
+                "longitude": -48.434032
+            },
+            {
+                "latitude": -1.454241,
+                "longitude": -48.437139
+            },
+            {
+                "latitude": -1.454511,
+                "longitude": -48.445373
+            },
+            {
+                "latitude": -1.454469,
+                "longitude": -48.436797
+            },
+            {
+                "latitude": -1.458516,
+                "longitude": -48.434059
+            },
+            {
+                "latitude": -1.457439,
+                "longitude": -48.436078
+            },
+            {
+                "latitude": -1.458178,
+                "longitude": -48.436176
+            },
+            {
+                "latitude": -1.458577,
+                "longitude": -48.434722
+            },
+            {
+                "latitude": -1.458768,
+                "longitude": -48.434533
+            },
+            {
+                "latitude": -1.454113,
+                "longitude": -48.437042
+            },
+            {
+                "latitude": -1.454051,
+                "longitude": -48.436691
+            },
+            {
+                "latitude": -1.454210,
+                "longitude": -48.438667
+            },
+            {
+                "latitude": -1.454567,
+                "longitude": -48.438621
+            },
+            {
+                "latitude": -1.455116,
+                "longitude": -48.439145
+            },
+            {
+                "latitude": -1.454735,
+                "longitude": -48.439240
+            },
+            {
+                "latitude": -1.458941,
+                "longitude": -48.435561
+            },
+            {
+                "latitude": -1.458494,
+                "longitude": -48.435860
+            },
+            {
+                "latitude": -1.453501,
+                "longitude": -48.443094
+            },
+            {
+                "latitude": -1.453394,
+                "longitude": -48.442833
+            },
+            {
+                "latitude": -1.453476,
+                "longitude": -48.443327
+            },
+            {
+                "latitude": -1.454579,
+                "longitude": -48.436634
+            },
+            {
+                "latitude": -1.458236,
+                "longitude": -48.434233
+            },
+            {
+                "latitude": -1.459717,
+                "longitude": -48.436295
+            },
+            {
+                "latitude": -1.459532,
+                "longitude": -48.435945
+            },
+            {
+                "latitude": -1.453234,
+                "longitude": -48.435871
+            },
+            {
+                "latitude": -1.452654,
+                "longitude": -48.436728
+            },
+            {
+                "latitude": -1.456793,
+                "longitude": -48.434385
+            },
+            {
+                "latitude": -1.452283,
+                "longitude": -48.440643
+            },
+            {
+                "latitude": -1.454742,
+                "longitude": -48.446050
+            },
+            {
+                "latitude": -1.456122,
+                "longitude": -48.434124
+            },
+            {
+                "latitude": -1.456661,
+                "longitude": -48.433789
+            },
+            {
+                "latitude": -1.459987,
+                "longitude": -48.436938
+            },
+            {
+                "latitude": -1.458240,
+                "longitude": -48.436587
+            },
+            {
+                "latitude": -1.459140,
+                "longitude": -48.434947
+            },
+            {
+                "latitude": -1.458830,
+                "longitude": -48.435408
+            }
+        ]
+    }
+]
