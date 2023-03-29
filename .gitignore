@@ -1,0 +1,10 @@
+**/Makefile
+**/Makefile.in
+
+Makefile
+Makefile.in
+
+.dart_tool/
+build/
+pubspec.lock
+zteste.txt
