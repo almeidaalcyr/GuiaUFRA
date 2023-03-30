@@ -50,11 +50,11 @@ class _TelaMapaState extends State<TelaMapa> {
 
   //mapas
   static const String OSM = "OSM";
-  static const String MAPBOX = "MAPBOX";
   static const String LANDSCAPE = "LANDSCAPE";
   static const String NEIGHBOURHOOD = "NEIGHBOURHOOD";
   String mapaSelecionado = "OFFLINE";
   late TileLayerOptions mapa;
+  String mapa_provedor = "";
   setMapa(String m){
     switch(m){
       case OSM:
@@ -67,6 +67,7 @@ class _TelaMapaState extends State<TelaMapa> {
             'accessToken': "",
           },
         );
+        mapa_provedor = "©Mapbox";
         break;
       case LANDSCAPE:
         mapa = TileLayerOptions(
@@ -74,6 +75,7 @@ class _TelaMapaState extends State<TelaMapa> {
           urlTemplate: "https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=",
           tileProvider: const CachedTileProvider(),
         );
+        mapa_provedor = "Mapas ©Thunderforest Dados ©OpenStreetMap contributors";
         break;
       case NEIGHBOURHOOD:
         mapa = TileLayerOptions(
@@ -81,6 +83,7 @@ class _TelaMapaState extends State<TelaMapa> {
           urlTemplate: "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=",
           tileProvider: const CachedTileProvider(),
         );
+        mapa_provedor = "Mapas ©Thunderforest Dados ©OpenStreetMap contributors";
         break;
       default:
         mapa = TileLayerOptions(
@@ -88,6 +91,7 @@ class _TelaMapaState extends State<TelaMapa> {
           subdomains: ['a', 'b', 'c'],
           tileProvider: const CachedTileProvider(),
         );
+        mapa_provedor = "©OpenStreetMap contributors";
         break;
     }
   }
@@ -98,7 +102,6 @@ class _TelaMapaState extends State<TelaMapa> {
       if (Contato.contato[i].exibirNoMapa) {
         for (int j = 0; j < Contato.contato[i].marcadores.length; j++){
           marcadores.add(Contato.contato[i].marcadores[j]);
-          print("*");
         }
       }
     }
@@ -142,11 +145,11 @@ class _TelaMapaState extends State<TelaMapa> {
           Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low, forceAndroidLocationManager: !googleServices, /*timeLimit: Duration (seconds: 10)*/)
               .then((event) {
             celular = Marcador.getMarcador(
-                latitude: event.latitude,
-                longitude: event.longitude,
-                texto: "",
-                cor: Colors.blue,
-                icone: Icons.circle,
+              latitude: event.latitude,
+              longitude: event.longitude,
+              texto: "",
+              cor: Colors.blue,
+              icone: Icons.circle,
             );
           });
         });
@@ -181,7 +184,7 @@ class _TelaMapaState extends State<TelaMapa> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Guia UFRA - Campus Belém"),
-        actions: <Widget> [
+        /*actions: <Widget> [
           IconButton(
             icon: const Icon(Icons.headphones),
             tooltip: "nada",
@@ -191,44 +194,49 @@ class _TelaMapaState extends State<TelaMapa> {
               );
             },
           )
-        ],
+        ],*/
       ),
 
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-          child: FlutterMap(
-          options: MapOptions(
-            zoom: 14.0,
-            minZoom: 15.5,
-            maxZoom: 18.0,
+      body: Stack(
+          children: <Widget> [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: FlutterMap(
+                options: MapOptions(
+                  zoom: 14.0,
+                  minZoom: 15.5,
+                  maxZoom: 18.0,
 
+                  //Limites do campus Belém
+                  nePanBoundary: geo.LatLng(-1.451167, -48.431376),
+                  swPanBoundary: geo.LatLng(-1.464912, -48.446199),
+                  slideOnBoundaries: false,
 
-            //Limites do campus Belém
-            nePanBoundary: geo.LatLng(-1.451167, -48.431376),
-            swPanBoundary: geo.LatLng(-1.464912, -48.446199),
-            slideOnBoundaries: false,
+                  center: new geo.LatLng(-1.458039, -48.438787),
+                ),
 
-            center: new geo.LatLng(-1.458039, -48.438787),
-          ),
-
-          layers: [
-            mapa,
-            //Text("Teste"),
-            MarkerLayerOptions(
-
-              markers: [
-                celular,
-                ...marcadores,
-              ],
+                layers: [
+                  mapa,
+                  MarkerLayerOptions(
+                    markers: [
+                      celular,
+                      ...marcadores,
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(mapa_provedor),
+            ),
+          ]
       ),
 
       floatingActionButton: FloatingActionButton.extended(
-        label: Text("Pontos de interesse"),
-        icon: Icon(Icons.search,),
+        label: const Text("Pontos de interesse"),
+        icon: const Icon(Icons.search,),
         onPressed: () {
           Navigator.of(context).push(
               MaterialPageRoute(
@@ -236,9 +244,8 @@ class _TelaMapaState extends State<TelaMapa> {
                     return TelaLista(Busca.localizacao);
                   }
               )
-
           ).then((_){
-              carregaMarcadores();
+            carregaMarcadores();
           });
         },
         tooltip: 'Busca',
