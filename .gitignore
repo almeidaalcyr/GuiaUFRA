@@ -4,6 +4,16 @@
 Makefile
 Makefile.in
 
-.dart_tool/
-build/
 pubspec.lock
+
+android/
+build/
+ios/
+linux/
+macos/
+test/
+web/
+windows/
+
+.dart_tool/
+.idea/
