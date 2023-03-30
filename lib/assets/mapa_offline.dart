@@ -8,7 +8,6 @@ class CachedTileProvider extends TileProvider {
   ImageProvider getImage(Coords<num> coords, TileLayerOptions options) {
     return CachedNetworkImageProvider(
       getTileUrl(coords, options),
-      //Now you can set options that determine how the image gets cached via whichever plugin you use.
     );
   }
 }
