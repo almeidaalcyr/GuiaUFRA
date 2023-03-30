@@ -1,23 +1,23 @@
 import 'dart:async';
-import 'dart:convert';
+//import 'dart:convert';
 //import 'dart:html';
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+//import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
 import 'tela_lista.dart';
-import 'package:location/location.dart' hide LocationAccuracy;
-import 'package:http/http.dart' as http;
+//import 'package:location/location.dart' hide LocationAccuracy;
+//import 'package:http/http.dart' as http;
 //import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:provider/provider.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:geolocator/geolocator.dart';
 
-import 'package:provider/src/provider.dart';
-import '../assets/provider.dart';
+//import 'package:provider/src/provider.dart';
+//import '../assets/provider.dart';
 import '../contato.dart';
 import '../assets/marcador.dart';
 import '../assets/mapa_offline.dart';
