@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Evento {
-  var inputFormato = DateFormat('yyyy-MM-dd');
-  var outputFormato = DateFormat('dd MM yyyy');
+  final inputFormato = DateFormat('yyyy-MM-dd');
+  final outputFormato = DateFormat('dd MM yyyy');
 
   static List <Evento> eventos = [];
 

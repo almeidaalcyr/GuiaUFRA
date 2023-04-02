@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Contato {
   static List <Contato> contato = [];
+
   static String formataCelular(String telefone){
     return telefone.replaceAllMapped(RegExp(r'(\d{2})(\d{4})(\d+)'), (Match m) => "(${m[1]}) ${m[2]}-${m[3]}");
   }
@@ -48,6 +49,7 @@ class Contato {
 
   bool possuiContato = false;
   bool possuiRedeSocial = false;
+  bool possuiCoordenada = false;
 
   Contato({
     required this.id,
@@ -90,6 +92,7 @@ class Contato {
     }
 
     if (coordenadas != null){
+      possuiCoordenada = true;
       for (int i = 0; i < coordenadas!.length; i++){
         Marker marcador = Marcador.getMarcador(
             latitude: coordenadas![i]['latitude'],
