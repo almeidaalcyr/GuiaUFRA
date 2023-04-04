@@ -150,7 +150,6 @@ class _TelaListaState extends State<TelaLista> {
 
                   }),
             )
-
         ),
 
         body: widget.barraBusca && widget.indicesResultadoBusca.isEmpty && controller.text.isNotEmpty

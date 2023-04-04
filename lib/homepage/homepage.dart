@@ -81,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
       }).toList();
 
-
       setState(() {
         Contato.contato.sort((a,b) => a.nome.compareTo(b.nome));
         contato.sort((a,b) => a["nome"].compareTo(b["nome"]));
