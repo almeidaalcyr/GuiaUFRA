@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 // import 'assets/provider.dart';
 import 'homepage/homepage.dart';
+import 'telas/mapa.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: Teste(),
-      home: const MyHomePage(title: 'Guia UFRA'),
+      home: MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
       debugShowCheckedModeBanner: false,
     );
   }

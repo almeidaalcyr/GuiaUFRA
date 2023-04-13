@@ -3,13 +3,16 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geodesy/geodesy.dart' as geo;
 
 class Marcador {
-  static Marker getMarcador({
-    required double latitude,
-    required double longitude,
-    required String texto,
-    required Color cor,
-    required IconData icone,
-  }){
+  static Marker getMarcador(
+      {
+        required double latitude,
+        required double longitude,
+        required String texto,
+        required Color cor,
+        required IconData icone,
+      }
+      )
+  {
     return Marker(
       rotate: true,
       width: 300,
@@ -36,7 +39,8 @@ class Marcador {
                 style: const TextStyle(fontSize: 15),
               ),
             ],
-          )),
+          )
+      ),
     );
   }
 }

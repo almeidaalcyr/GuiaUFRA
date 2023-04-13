@@ -1,40 +1,29 @@
 import 'dart:async';
-//import 'dart:convert';
-//import 'dart:html';
-//import 'dart:io';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
-//import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'tela_lista.dart';
-//import 'package:location/location.dart' hide LocationAccuracy;
-//import 'package:http/http.dart' as http;
-//import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-//import 'package:provider/provider.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:geolocator/geolocator.dart';
-
-//import 'package:provider/src/provider.dart';
-//import '../assets/provider.dart';
 import '../contato.dart';
 import '../assets/marcador.dart';
 import '../assets/mapa_offline.dart';
 
-//import 'package:geolocator_platform_interface/src/enums/location_accuracy.dart' as geoL;
-
 class TelaMapa extends StatefulWidget {
-
   @override
   _TelaMapaState createState() => _TelaMapaState();
 }
 
 class _TelaMapaState extends State<TelaMapa> {
-  static const int intervalo_Atualizacao_Dispositivo = 5; //Tempo de atualização das coordenadas do dispositivo
-  bool googleServices = false; // Usar google services para melhorar a precisão?
+  static const int intervalo_Atualizacao_Dispositivo = 1; //Tempo de atualização das coordenadas do dispositivo
+  static String enderecoAPITraccar = 'ws://10.10.200.189:9000';
+  bool googleServices = true; // Usar google services para melhorar a precisão?
 
-  List <Marker> marcadores = []; //Precisa ser uma lista. Por causa do popup.
+  final TextEditingController _controller = TextEditingController();
+  final _channel = WebSocketChannel.connect(
+    Uri.parse(enderecoAPITraccar),
+  );
 
   @override
   void initState(){
@@ -42,10 +31,9 @@ class _TelaMapaState extends State<TelaMapa> {
     Timer.run(() {
       carregaMarcadores();
       verificaGpsAtivoGeolocator();
-      atualizaCoordenadaLocal();
+      atualizaCoordenadas();
     });
-    Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) => atualizaCoordenadaLocal()); //Auto update
-
+    Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) => atualizaCoordenadas()); //Auto update
   }
 
   //mapas
@@ -67,7 +55,7 @@ class _TelaMapaState extends State<TelaMapa> {
             'accessToken': "",
           },
         );
-        mapa_provedor = "©Mapbox";
+        mapa_provedor = "© Mapbox";
         break;
       case LANDSCAPE:
         mapa = TileLayerOptions(
@@ -75,7 +63,7 @@ class _TelaMapaState extends State<TelaMapa> {
           urlTemplate: "https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=",
           tileProvider: const CachedTileProvider(),
         );
-        mapa_provedor = "Mapas ©Thunderforest Dados ©OpenStreetMap contributors";
+        mapa_provedor = "Mapas © Thunderforest Dados © OpenStreetMap contributors";
         break;
       case NEIGHBOURHOOD:
         mapa = TileLayerOptions(
@@ -83,7 +71,7 @@ class _TelaMapaState extends State<TelaMapa> {
           urlTemplate: "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=",
           tileProvider: const CachedTileProvider(),
         );
-        mapa_provedor = "Mapas ©Thunderforest Dados ©OpenStreetMap contributors";
+        mapa_provedor = "Mapas © Thunderforest Dados © OpenStreetMap contributors";
         break;
       default:
         mapa = TileLayerOptions(
@@ -91,11 +79,12 @@ class _TelaMapaState extends State<TelaMapa> {
           subdomains: ['a', 'b', 'c'],
           tileProvider: const CachedTileProvider(),
         );
-        mapa_provedor = "©OpenStreetMap contributors";
+        mapa_provedor = "© OpenStreetMap contributors";
         break;
     }
   }
 
+  List <Marker> marcadores = []; //Precisa ser uma lista. Por causa do popup.
   carregaMarcadores() {
     marcadores = [];
     for (int i = 0; i < Contato.contato.length; i++){
@@ -108,15 +97,6 @@ class _TelaMapaState extends State<TelaMapa> {
     setState(() {});
   }
 
-  Marker celular = Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.circle);
-  /*Marker( //Cria o marcador com a localização do celular
-    rotate: true,
-    width: 80,
-    height: 80,
-    point: geo.LatLng(0, 0),
-    builder: (ctx) =>Container(
-    ),
-  );*/
   late LocationPermission permissaoConcedida;
   verificaGpsAtivoGeolocator() async {
     var servicoAbilitado = await Geolocator.isLocationServiceEnabled();
@@ -138,11 +118,12 @@ class _TelaMapaState extends State<TelaMapa> {
   }
 
   /* GEOLOCATOR */
-  atualizaCoordenadaLocal(){
+  Marker celular = Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.circle);
+  List <Marker> bage = [Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.directions_bus)];
+  atualizaCoordenadas(){
     try {
       if (permissaoConcedida == LocationPermission.always) {
-        setState((){
-          Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low, forceAndroidLocationManager: !googleServices, /*timeLimit: Duration (seconds: 10)*/)
+          Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low, forceAndroidLocationManager: googleServices, timeLimit: Duration (seconds: 60))
               .then((event) {
             celular = Marcador.getMarcador(
               latitude: event.latitude,
@@ -152,11 +133,13 @@ class _TelaMapaState extends State<TelaMapa> {
               icone: Icons.circle,
             );
           });
-        });
       }
     }
     catch (e) {}
+    _channel.sink.add("x");
+    setState(() {});
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -215,17 +198,44 @@ class _TelaMapaState extends State<TelaMapa> {
 
                   center: new geo.LatLng(-1.458039, -48.438787),
                 ),
-
                 layers: [
                   mapa,
                   MarkerLayerOptions(
                     markers: [
                       celular,
+                      ...bage,
                       ...marcadores,
                     ],
                   ),
                 ],
               ),
+            ),
+            StreamBuilder(
+              stream: _channel.stream,
+              builder: (context, snapshot) {
+                print("STREAM BUILDER");
+                if (snapshot.hasData) {
+                  final j = jsonDecode(snapshot.data);
+                  try {
+                    //setState(() {
+                      bage.clear();
+                      for (int i = 0; i < j!.length; i++) {
+                        print(i);
+                        bage.add(Marcador.getMarcador(
+                            latitude: j[i]['latitude'],
+                            longitude: j[i]['longitude'],
+                            texto: " ",
+                            cor: Colors.red,
+                            icone: Icons.directions_bus));
+                      }
+                      print(snapshot.data);
+
+                  } catch (e) {
+                    print("CATCH - STREAMBUILDER");
+                  }
+                }
+                return Wrap(); //Text(snapshot.hasData ? 'CONECTOU' : 'ERRO');//Text(j[0]);//;${"a"}
+              },
             ),
             Align(
               alignment: Alignment.bottomRight,
@@ -249,7 +259,7 @@ class _TelaMapaState extends State<TelaMapa> {
           });
         },
         tooltip: 'Busca',
-      ),
+      ), //floatingActionButton
     );
   }
 }
