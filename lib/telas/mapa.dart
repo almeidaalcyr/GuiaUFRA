@@ -3,27 +3,63 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
+import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'tela_lista.dart';
 import 'package:geolocator/geolocator.dart';
 import '../contato.dart';
 import '../assets/marcador.dart';
 import '../assets/mapa_offline.dart';
+import '../notification.dart';
 
 class TelaMapa extends StatefulWidget {
+  final WebSocketChannel channel = WebSocketChannel.connect(Uri.parse('ws://10.10.200.189:9000'));
+
   @override
-  _TelaMapaState createState() => _TelaMapaState();
+  _TelaMapaState createState() => _TelaMapaState(channel: channel);
 }
 
 class _TelaMapaState extends State<TelaMapa> {
-  static const int intervalo_Atualizacao_Dispositivo = 1; //Tempo de atualização das coordenadas do dispositivo
-  static String enderecoAPITraccar = 'ws://10.10.200.189:9000';
-  bool googleServices = true; // Usar google services para melhorar a precisão?
+  final WebSocketChannel? channel;
 
-  final TextEditingController _controller = TextEditingController();
-  final _channel = WebSocketChannel.connect(
-    Uri.parse(enderecoAPITraccar),
-  );
+  _TelaMapaState({this.channel}) {
+    try {
+      channel?.stream.listen((data) {
+        final localizacoes = jsonDecode(data);
+        try {
+          bage.clear();
+          for (int i = 0; i < localizacoes!.length; i++) {
+            bage.add(Marcador.getMarcador(
+                latitude: localizacoes[i]['latitude'],
+                longitude: localizacoes[i]['longitude'],
+                texto: " ",
+                cor: Colors.red,
+                icone: Icons.directions_bus));
+          }
+
+        } catch (e) {}
+        setState(() {});
+
+        print(data);
+
+        print("***********");
+      },
+          onDone: () async {
+            channel?.sink.close();
+            print("~~~ onDone ~~~");
+          },
+          /*onError: () async {
+            print("onError");
+          }*/
+      );
+    } catch (e) {
+      print("Não foi possível conectar!");
+    }
+  }
+
+  static const int intervalo_Atualizacao_Dispositivo = 1; //Tempo de atualização das coordenadas do dispositivo
+
+  bool googleServices = true;// Usar google services para melhorar a precisão?
 
   @override
   void initState(){
@@ -34,6 +70,12 @@ class _TelaMapaState extends State<TelaMapa> {
       atualizaCoordenadas();
     });
     Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) => atualizaCoordenadas()); //Auto update
+    Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) {
+      try {
+        widget.channel.sink.add("x");
+        print("enviado");
+      } catch (e) { print("não enviou"); }
+    }); //Auto update
   }
 
   //mapas
@@ -123,23 +165,28 @@ class _TelaMapaState extends State<TelaMapa> {
   atualizaCoordenadas(){
     try {
       if (permissaoConcedida == LocationPermission.always) {
-          Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low, forceAndroidLocationManager: googleServices, timeLimit: Duration (seconds: 60))
-              .then((event) {
-            celular = Marcador.getMarcador(
-              latitude: event.latitude,
-              longitude: event.longitude,
-              texto: "",
-              cor: Colors.blue,
-              icone: Icons.circle,
-            );
-          });
+        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low, forceAndroidLocationManager: googleServices, timeLimit: Duration (seconds: 60))
+            .then((event) {
+          celular = Marcador.getMarcador(
+            latitude: event.latitude,
+            longitude: event.longitude,
+            texto: "",
+            cor: Colors.blue,
+            icone: Icons.circle,
+          );
+        });
       }
     }
     catch (e) {}
-    _channel.sink.add("x");
     setState(() {});
+    try {
+      widget.channel.sink.add("x");
+    } catch (e) {}
   }
 
+  enviaMensagem(msg){
+    widget.channel.sink.add(msg);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,18 +213,20 @@ class _TelaMapaState extends State<TelaMapa> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Guia UFRA - Campus Belém"),
-        /*actions: <Widget> [
+        title: const Text("Guia UFRA - Campus Belém"),
+        actions: <Widget> [
           IconButton(
             icon: const Icon(Icons.headphones),
             tooltip: "nada",
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
+              //channel?.changeStream((p0) => null);
+
+              /*ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('This is a snackbar'))
-              );
+              );*/
             },
           )
-        ],*/
+        ],
       ),
 
       body: Stack(
@@ -188,15 +237,15 @@ class _TelaMapaState extends State<TelaMapa> {
               child: FlutterMap(
                 options: MapOptions(
                   zoom: 14.0,
-                  minZoom: 15.5,
+                  minZoom: 12.0,
                   maxZoom: 18.0,
 
                   //Limites do campus Belém
-                  nePanBoundary: geo.LatLng(-1.451167, -48.431376),
+                  nePanBoundary: geo.LatLng(-1.4561754180442585,-48.43970775604249),//(-1.451167, -48.431376),
                   swPanBoundary: geo.LatLng(-1.464912, -48.446199),
                   slideOnBoundaries: false,
 
-                  center: new geo.LatLng(-1.458039, -48.438787),
+                  center: new geo.LatLng(-1.4561754180442585,-48.43970775604249),//(-1.458039, -48.438787),
                 ),
                 layers: [
                   mapa,
@@ -210,33 +259,6 @@ class _TelaMapaState extends State<TelaMapa> {
                 ],
               ),
             ),
-            StreamBuilder(
-              stream: _channel.stream,
-              builder: (context, snapshot) {
-                print("STREAM BUILDER");
-                if (snapshot.hasData) {
-                  final j = jsonDecode(snapshot.data);
-                  try {
-                    //setState(() {
-                      bage.clear();
-                      for (int i = 0; i < j!.length; i++) {
-                        print(i);
-                        bage.add(Marcador.getMarcador(
-                            latitude: j[i]['latitude'],
-                            longitude: j[i]['longitude'],
-                            texto: " ",
-                            cor: Colors.red,
-                            icone: Icons.directions_bus));
-                      }
-                      print(snapshot.data);
-
-                  } catch (e) {
-                    print("CATCH - STREAMBUILDER");
-                  }
-                }
-                return Wrap(); //Text(snapshot.hasData ? 'CONECTOU' : 'ERRO');//Text(j[0]);//;${"a"}
-              },
-            ),
             Align(
               alignment: Alignment.bottomRight,
               child: Text(mapa_provedor),
@@ -248,18 +270,26 @@ class _TelaMapaState extends State<TelaMapa> {
         label: const Text("Pontos de interesse"),
         icon: const Icon(Icons.search,),
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (_){
-                    return TelaLista(Busca.localizacao);
-                  }
-              )
-          ).then((_){
-            carregaMarcadores();
-          });
+          widget.channel.sink.close();
+          /*Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (_){
+                      return TelaLista(Busca.localizacao);
+                    }
+                )
+            ).then((_){
+              carregaMarcadores();
+            });*/
         },
         tooltip: 'Busca',
-      ), //floatingActionButton
+      ),
+
     );
+  }
+
+  @override
+  void dispose() {
+    //widget.channel.sink.close();
+    super.dispose();
   }
 }

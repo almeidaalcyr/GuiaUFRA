@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: Teste(),
-      home: MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
+      home: TelaMapa(), //MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
       debugShowCheckedModeBanner: false,
     );
   }
