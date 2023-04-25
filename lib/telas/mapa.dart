@@ -1,8 +1,10 @@
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
+import 'package:geodesy/geodesy.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'tela_lista.dart';
@@ -20,6 +22,29 @@ class TelaMapa extends StatefulWidget {
 }
 
 class _TelaMapaState extends State<TelaMapa> {
+  double currentZoom = 15.5;
+  final double minZoom = 15.0;
+  final double maxZoom = 18.0;
+  final double deltaZoom = 0.5;
+  final LatLng center = geo.LatLng(-1.458039, -48.438787);
+
+  //Limites NE e SW do campus Belém
+  final LatLng nePanBoundary = geo.LatLng(-1.451167, -48.431376);
+  final LatLng swPanBoundary = geo.LatLng(-1.464912, -48.446199);
+  MapController mapController = MapController();
+  void _zoomIn() {
+    if (currentZoom + deltaZoom <= maxZoom) {
+      currentZoom = currentZoom + deltaZoom;
+      mapController.move(mapController.center, currentZoom + deltaZoom);
+    }
+  }
+  void _zoomOut() {
+    if (currentZoom - deltaZoom >= minZoom) {
+      currentZoom = currentZoom - deltaZoom;
+      mapController.move(mapController.center, currentZoom - deltaZoom);
+    }
+  }
+
   final WebSocketChannel? channel;
 
   _TelaMapaState({this.channel}) {
@@ -44,13 +69,10 @@ class _TelaMapaState extends State<TelaMapa> {
 
         print("***********");
       },
-          onDone: () async {
-            channel?.sink.close();
-            print("~~~ onDone ~~~");
-          },
-          /*onError: () async {
-            print("onError");
-          }*/
+        onDone: () async {
+          channel?.sink.close();
+          print("~~~ onDone ~~~");
+        },
       );
     } catch (e) {
       print("Não foi possível conectar!");
@@ -69,13 +91,13 @@ class _TelaMapaState extends State<TelaMapa> {
       verificaGpsAtivoGeolocator();
       atualizaCoordenadas();
     });
-    Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) => atualizaCoordenadas()); //Auto update
-    Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) {
+    //Timer.periodic(const Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) => atualizaCoordenadas()); //Auto update
+    /*Timer.periodic(Duration(seconds: intervalo_Atualizacao_Dispositivo), (Timer t) {
       try {
         widget.channel.sink.add("x");
         print("enviado");
       } catch (e) { print("não enviou"); }
-    }); //Auto update
+    });*/ //Auto update
   }
 
   //mapas
@@ -190,25 +212,26 @@ class _TelaMapaState extends State<TelaMapa> {
 
   @override
   Widget build(BuildContext context) {
+
+
     /* Atualiza as coordenadas locais em tempo real.
        Pelo initState está configurado para atualizar a cada 5 segundos */
-    /*StreamSubscription<Position> positionStream = Geolocator.getPositionStream(forceAndroidLocationManager: !googleServices).distinct().listen((Position position){
-      print("**");
+    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(forceAndroidLocationManager: !googleServices).distinct().listen((Position position){
       double lat = position.latitude;
       double lng = position.longitude;
-      print("$lat $lng");
+//      print("$lat $lng");
       setState(() {
         celular = Marker( //Cria o marcador com a localização do celular
-          rotate: true,
-          width: 80,
-          height: 80,
-          point: geo.LatLng(lat, lng),
-          builder: (ctx) =>Container(
-            child: Icon(Icons.circle_outlined,),
-          )
+            rotate: true,
+            width: 80,
+            height: 80,
+            point: geo.LatLng(lat, lng),
+            builder: (ctx) =>Container(
+              child: const Icon(Icons.circle_outlined,),
+            )
         );
       });
-    });*/
+    });
     setMapa(mapaSelecionado);
 
     return Scaffold(
@@ -235,17 +258,15 @@ class _TelaMapaState extends State<TelaMapa> {
               width: double.infinity,
               height: double.infinity,
               child: FlutterMap(
+                mapController: mapController,
                 options: MapOptions(
-                  zoom: 14.0,
-                  minZoom: 12.0,
-                  maxZoom: 18.0,
-
-                  //Limites do campus Belém
-                  nePanBoundary: geo.LatLng(-1.4561754180442585,-48.43970775604249),//(-1.451167, -48.431376),
-                  swPanBoundary: geo.LatLng(-1.464912, -48.446199),
-                  slideOnBoundaries: false,
-
-                  center: new geo.LatLng(-1.4561754180442585,-48.43970775604249),//(-1.458039, -48.438787),
+                  center: center,
+                  zoom: currentZoom,
+                  minZoom: minZoom,
+                  maxZoom: maxZoom,
+                  nePanBoundary: nePanBoundary,
+                  swPanBoundary: swPanBoundary,
+                  slideOnBoundaries: true,
                 ),
                 layers: [
                   mapa,
@@ -259,6 +280,23 @@ class _TelaMapaState extends State<TelaMapa> {
                 ],
               ),
             ),
+            Column(
+              children: [
+                ElevatedButton(
+                  child: const Icon(Icons.zoom_in),
+                  onPressed: () {
+                    _zoomIn();
+                  },
+                ),
+                ElevatedButton(
+                  child: const Icon(Icons.zoom_out),
+                  onPressed: () {
+                    _zoomOut();
+                  },
+                ),
+              ],
+
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: Text(mapa_provedor),
@@ -270,6 +308,7 @@ class _TelaMapaState extends State<TelaMapa> {
         label: const Text("Pontos de interesse"),
         icon: const Icon(Icons.search,),
         onPressed: () {
+          _zoomIn();
           widget.channel.sink.close();
           /*Navigator.of(context).push(
                 MaterialPageRoute(
