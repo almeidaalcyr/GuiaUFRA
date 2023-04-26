@@ -2,52 +2,41 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'assets/marcador.dart';
 
 class localizacao extends ChangeNotifier {
-  List <Marker> _bage = [];
-  List <Marker> get bage => _bage;
-  WebSocketChannel channel = WebSocketChannel.connect(Uri.parse('ws://10.10.200.189:9000'));
+  static const String serverUrl = 'ws://10.10.200.189:9000';
+  late WebSocketChannel channel;
 
-  localizacao(){}
-
-  void connect() {
+  localizacao(){
+    this.channel = WebSocketChannel.connect(Uri.parse(serverUrl));
     try {
-      channel?.stream.listen((data) => onData(data),
-        onDone: () async {
-          channel?.sink.close();
-          print("~~~ onDone ~~~");
-        },
+      this.channel?.stream.listen(
+            (data) => onData(data),
+        onDone: () => onDone(),
       );
     } catch (e) {
       print("Não foi possível conectar!");
     }
+    print("LOCALIZACAO CRIADO");
   }
 
   onData(data) {
-    final localizacoes = jsonDecode(data);
-
-    try {
-      bage.clear();
-      for (int i = 0; i < localizacoes!.length; i++) {
-        bage.add(Marcador.getMarcador(
-            latitude: localizacoes[i]['latitude'],
-            longitude: localizacoes[i]['longitude'],
-            texto: " ",
-            cor: Colors.red,
-            icone: Icons.directions_bus));
-      }
-    } catch (e) {}
-
     print(data);
-
-    print("***********");
     notifyListeners();
+    //this.onSend("x");
+  }
+
+  onDone(){
+    print("onDone chamado");
   }
 
   onSend(msg){
-    channel?.sink.add(msg);
+    print("onSend chamado!");
+    try {
+      this.channel?.sink.add(msg);
+    } catch (e){
+      print("não foi possível enviar");
+    }
   }
 }

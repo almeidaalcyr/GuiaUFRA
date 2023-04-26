@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:guiaufra/assets/provider.dart';
 // import 'package:guiaufra/teste.dart';
 import 'package:provider/provider.dart';
+import 'notification.dart';
+import 'teste.dart';
 
 // import 'assets/provider.dart';
 import 'homepage/homepage.dart';
@@ -22,7 +24,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider<localizacao>(
+        create: (ctx) => (localizacao()),
+    child:MaterialApp(
       title: 'Guia UFRA',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Colors.blue),
@@ -32,8 +36,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: Teste(),
-      home: TelaMapa(), //MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
+      home: MyHomePage(title: 'Guia UFRA'), //Teste(),//TelaMapa(), //MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
       debugShowCheckedModeBanner: false,
+    )
     );
   }
 }
