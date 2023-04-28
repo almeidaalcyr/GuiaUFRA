@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guiaufra/Cards/card_icone_rede_social.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:provider/src/provider.dart';
-import '../assets/provider.dart';
 import '../contato.dart';
 
 

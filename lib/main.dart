@@ -3,20 +3,18 @@
 // import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:guiaufra/assets/provider.dart';
-// import 'package:guiaufra/teste.dart';
 import 'package:provider/provider.dart';
 import 'notification.dart';
-import 'teste.dart';
 
 // import 'assets/provider.dart';
 import 'homepage/homepage.dart';
 import 'telas/mapa.dart';
 
 void main() {
-  runApp(MultiProvider(providers: [
+  runApp(/*MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => ProviderClasse()),
-  ], child: const MyApp()));
+  ], child: const MyApp())*/
+  const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,8 +22,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<localizacao>(
-        create: (ctx) => (localizacao()),
+    return ChangeNotifierProvider<LocalizacaoBage>(
+        create: (ctx) => (LocalizacaoBage()),
     child:MaterialApp(
       title: 'Guia UFRA',
       theme: ThemeData(

@@ -1,42 +1,73 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'secreto.dart';
+import 'package:geodesy/geodesy.dart' as geo;
 
-class localizacao extends ChangeNotifier {
-  static const String serverUrl = 'ws://10.10.200.189:9000';
+class LocalizacaoBage extends ChangeNotifier {
+  String serverUrl = "";
   late WebSocketChannel channel;
+  String _mensagem = "x";
+  String get mensagem => _mensagem;
+  final List <Marker> _bage = [Marker(
+    rotate: true,
+    width: 300,
+    height: 80,
+    point: geo.LatLng(0,0),
+    builder: (ctx) => const Icon(
+      Icons.bus_alert,
+      color: Colors.green,
+      size: 15,
+    ),
+  )
+  ];
 
-  localizacao(){
-    this.channel = WebSocketChannel.connect(Uri.parse(serverUrl));
+  List <Marker> get bage => _bage;
+
+  LocalizacaoBage(){
+    channel = WebSocketChannel.connect(Uri.parse(serverUrl));
     try {
-      this.channel?.stream.listen(
+      channel.stream.listen(
             (data) => onData(data),
         onDone: () => onDone(),
       );
-    } catch (e) {
-      print("Não foi possível conectar!");
-    }
-    print("LOCALIZACAO CRIADO");
+    } catch (e) {/**/}
   }
 
-  onData(data) {
-    print(data);
+  onData(data) async {
+    final dataJson = jsonDecode(data);
+    try{
+      _bage.clear();
+      for (int i = 0; i < dataJson.length; i++){
+        _bage.add(Marker(
+          rotate: true,
+          width: 300,
+          height: 80,
+          point: geo.LatLng(dataJson[i]["latitude"],dataJson[i]["longitude"]),
+          builder: (ctx) => const Icon(
+            Icons.directions_bus,
+            color: Colors.red,
+            size: 25,
+          ),
+        )
+        );
+      }
+    } catch (e) {/**/}
+
+    _mensagem = data;
     notifyListeners();
-    //this.onSend("x");
+
+    // Envia nova solictação
+    await Future.delayed(const Duration(seconds: 1));
+    onSend("x");
   }
 
-  onDone(){
-    print("onDone chamado");
-  }
+  onDone(){}
 
   onSend(msg){
-    print("onSend chamado!");
     try {
-      this.channel?.sink.add(msg);
-    } catch (e){
-      print("não foi possível enviar");
-    }
+      channel.sink.add(msg);
+    } catch (e){/**/}
   }
 }

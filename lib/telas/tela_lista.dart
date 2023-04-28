@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Cards/card_checkbox_contato.dart';
 import 'package:provider/src/provider.dart';
 import '../contato.dart';
-import '../assets/provider.dart';
 import '../Cards/card_contato.dart';
 import '../evento.dart';
 

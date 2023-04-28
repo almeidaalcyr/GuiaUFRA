@@ -2,10 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:guiaufra/Cards/card_exibir_contato.dart';
-// ignore: implementation_imports
-import 'package:provider/src/provider.dart';
 import '../contato.dart';
-import '../assets/provider.dart';
 
 class CardCheckboxContato extends StatefulWidget{
   int indice;

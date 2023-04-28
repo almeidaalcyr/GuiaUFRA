@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
 import '../telas/tela_detalhes_contato.dart';
-import 'package:provider/src/provider.dart';
-import '../assets/provider.dart';
 import '../contato.dart';
 
 class CardContato extends StatelessWidget{

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 import '../contato.dart';
-import '../assets/provider.dart';
 
 class CardSwitchContato extends StatefulWidget{
   int indice;

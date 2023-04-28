@@ -10,8 +10,6 @@ import '../Cards/card_link_contato.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Cards/card_rede_social.dart';
 import '../main.dart';
-import 'package:provider/src/provider.dart';
-import '../assets/provider.dart';
 import '../contato.dart';
 
 class TelaDetalhesContato extends StatefulWidget {

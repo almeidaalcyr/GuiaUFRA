@@ -1,6 +1,4 @@
-
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
@@ -14,14 +12,17 @@ import '../assets/mapa_offline.dart';
 import '../notification.dart';
 
 class TelaMapa extends StatefulWidget {
+  const TelaMapa({super.key});
+
   @override
   _TelaMapaState createState() => _TelaMapaState();
 }
 
 class _TelaMapaState extends State<TelaMapa> {
+  final int intervaloAtualizacao = 1;
   bool googleServices = true;// Usar google services para melhorar a precisão?
   MapController mapController = MapController();
-
+  //Atributos do mapa
   double currentZoom = 15.5;
   final double minZoom = 15.0;
   final double maxZoom = 18.0;
@@ -30,11 +31,12 @@ class _TelaMapaState extends State<TelaMapa> {
   //Limites NE e SW do campus Belém
   final LatLng nePanBoundary = geo.LatLng(-1.451167, -48.431376);
   final LatLng swPanBoundary = geo.LatLng(-1.464912, -48.446199);
-  //mapas
-  static const String OSM = "OSM";
-  static const String LANDSCAPE = "LANDSCAPE";
-  static const String NEIGHBOURHOOD = "NEIGHBOURHOOD";
-  String mapaSelecionado = "default";
+  //Marcadores
+  Marker celular = Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.circle);
+  List <Marker> bage = [Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.directions_bus)];
+  List <Marker> marcadores = [];
+
+  late LocationPermission permissaoConcedida;
 
   void _zoomIn() {
     if (currentZoom + deltaZoom <= maxZoom) {
@@ -55,55 +57,10 @@ class _TelaMapaState extends State<TelaMapa> {
     Timer.run(() {
       carregaMarcadores();
       verificaGpsAtivoGeolocator();
-      //atualizaCoordenadas();
     });
+    Timer.periodic(Duration(seconds: intervaloAtualizacao), (Timer t) => setState(() {}));
   }
 
-
-  late TileLayerOptions mapa;
-  String mapa_provedor = "";
-  setMapa(String m){
-    switch(m){
-      case OSM:
-        mapa = TileLayerOptions(
-          fastReplace: true,
-          //TODO: é necessário inserir a APIKEY
-          urlTemplate: "https://api.mapbox.com/styles/v1/almeidaalcyr/ckq4moty32hjg17oxu6t5f3au/tiles/256/{z}/{x}/{y}@2x?access_token=",
-          additionalOptions: {
-            //TODO: é necessário inserir a APIKEY
-            'accessToken': "",
-          },
-        );
-        mapa_provedor = "© Mapbox";
-        break;
-      case LANDSCAPE:
-        mapa = TileLayerOptions(
-          //TODO: é necessário inserir a APIKEY
-          urlTemplate: "https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=",
-          tileProvider: const CachedTileProvider(),
-        );
-        mapa_provedor = "Mapas © Thunderforest Dados © OpenStreetMap contributors";
-        break;
-      case NEIGHBOURHOOD:
-        mapa = TileLayerOptions(
-          //TODO: é necessário inserir a APIKEY
-          urlTemplate: "https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=",
-          tileProvider: const CachedTileProvider(),
-        );
-        mapa_provedor = "Mapas © Thunderforest Dados © OpenStreetMap contributors";
-        break;
-      default:
-        mapa = TileLayerOptions(
-          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          subdomains: ['a', 'b', 'c'],
-          tileProvider: const CachedTileProvider(),
-        );
-        mapa_provedor = "© OpenStreetMap contributors";
-        break;
-    }
-  }
-
-  List <Marker> marcadores = []; //Precisa ser uma lista. Por causa do popup.
   carregaMarcadores() {
     marcadores = [];
     for (int i = 0; i < Contato.contato.length; i++){
@@ -116,13 +73,11 @@ class _TelaMapaState extends State<TelaMapa> {
     setState(() {});
   }
 
-  late LocationPermission permissaoConcedida;
   verificaGpsAtivoGeolocator() async {
     var servicoAbilitado = await Geolocator.isLocationServiceEnabled();
     if (!servicoAbilitado){
       return Future.error('Location services are disabled.');
     }
-
     permissaoConcedida = await Geolocator.checkPermission();
     if (permissaoConcedida == LocationPermission.denied) {
       permissaoConcedida = await Geolocator.requestPermission();
@@ -136,73 +91,48 @@ class _TelaMapaState extends State<TelaMapa> {
     }
   }
 
-  /* GEOLOCATOR */
-  Marker celular = Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.circle);
-  List <Marker> bage = [Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.directions_bus)];
-  /*atualizaCoordenadas(){
-    try {
-      if (permissaoConcedida == LocationPermission.always) {
-        Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.low, forceAndroidLocationManager: googleServices, timeLimit: Duration (seconds: 60))
-            .then((event) {
-          celular = Marcador.getMarcador(
-            latitude: event.latitude,
-            longitude: event.longitude,
-            texto: "",
-            cor: Colors.blue,
-            icone: Icons.circle,
-          );
-        });
-        print("*");
-      }
-    }
-    catch (e) {
-    }
-
-    setState(() {});
-    try {
-    } catch (e) {}
-  }*/
-
   @override
   Widget build(BuildContext context) {
     // Atualiza as coordenadas locais em tempo real.
-       /*Pelo initState está configurado para atualizar a cada 5 segundos */
-    StreamSubscription<Position> positionStream = Geolocator.getPositionStream(forceAndroidLocationManager: !googleServices).distinct().listen((Position position){
+    StreamSubscription<Position> positionStream = Geolocator
+        .getPositionStream(forceAndroidLocationManager: !googleServices)
+        .distinct()
+        .listen((Position position) {
       double lat = position.latitude;
       double lng = position.longitude;
-//      print("$lat $lng");
-      setState(() {
-        celular = Marker( //Cria o marcador com a localização do celular
-            rotate: true,
-            width: 80,
-            height: 80,
-            point: geo.LatLng(lat, lng),
-            builder: (ctx) =>Container(
-              child: const Icon(Icons.circle_outlined,),
-            )
-        );
-      });
-    });
-    setMapa(mapaSelecionado);
 
-    return Consumer<localizacao>(builder: (ctx, channel, _) {
+      celular = Marker( //Cria o marcador com a localização do celular
+          rotate: true,
+          width: 80,
+          height: 80,
+          point: geo.LatLng(lat, lng),
+          builder: (ctx) =>
+              Container(
+                child: const Icon(
+                  Icons.circle,
+                  color: Colors.blue,
+                  size: 20,),
+              )
+      );
+    });
+
+    //return Consumer<localizacao>(builder: (ctx, channel, _) {
+    return Consumer<LocalizacaoBage>(builder: (ctx, ws, _) {
       return Scaffold(
-        appBar: AppBar(
+        /*appBar: AppBar(
           title: const Text("Guia UFRA - Campus Belém"),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.headphones),
               tooltip: "nada",
               onPressed: () {
-                //channel?.changeStream((p0) => null);
-
-                /*ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar'))
-              );*/
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('This is a snackbar'))
+                );
               },
-            )
+            ),
           ],
-        ),
+        ),*/
 
         body: Stack(
             children: <Widget>[
@@ -221,47 +151,59 @@ class _TelaMapaState extends State<TelaMapa> {
                     slideOnBoundaries: true,
                   ),
                   layers: [
-                    mapa,
+                    TileLayerOptions(
+                        urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        subdomains: ['a', 'b', 'c'],
+                        tileProvider: const CachedTileProvider()
+                    ),
                     MarkerLayerOptions(
                       markers: [
                         celular,
-                        //...bage,
+                        ...ws.bage,
                         ...marcadores,
                       ],
                     ),
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  ElevatedButton(
-                    child: const Icon(Icons.zoom_in),
-                    onPressed: () {
-                      _zoomIn();
-                    },
-                  ),
-                  ElevatedButton(
-                    child: const Icon(Icons.zoom_out),
-                    onPressed: () {
-                      _zoomOut();
-                    },
-                  ),
-                ],
-
-              ),
               Align(
+                alignment: Alignment.topRight,
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                        overlayColor:  MaterialStateProperty.all(Colors.grey),
+                      ),
+                      child: const Icon(Icons.zoom_in),
+                      onPressed: () => _zoomIn(),
+                    ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                        overlayColor:  MaterialStateProperty.all(Colors.grey),
+                      ),
+                      child: const Icon(Icons.zoom_out),
+                      onPressed: () => _zoomOut(),
+                    ),
+                  ],
+                ),
+              ),
+              const Align(
                 alignment: Alignment.bottomRight,
-                child: Text(mapa_provedor),
+                child: Text("© OpenStreetMap contributors"),
               ),
             ]
         ),
 
-        floatingActionButton: FloatingActionButton.extended(
+        /*floatingActionButton: FloatingActionButton.extended(
           label: const Text("Pontos de interesse"),
           icon: const Icon(Icons.search,),
           onPressed: () {
-            channel.onSend("x");
-            /*Navigator.of(context).push(
+            ws.onSend("x");
+            Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (_){
                       return TelaLista(Busca.localizacao);
@@ -269,10 +211,10 @@ class _TelaMapaState extends State<TelaMapa> {
                 )
             ).then((_){
               carregaMarcadores();
-            });*/
+            });
           },
           tooltip: 'Busca',
-        ),
+        ),*/
 
       );
     }
@@ -282,6 +224,4 @@ class _TelaMapaState extends State<TelaMapa> {
   void dispose() {
     super.dispose();
   }
-
 }
-

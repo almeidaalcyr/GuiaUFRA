@@ -44,7 +44,5 @@ class Marcador {
     );
   }
 
-  teste(){}
-
   Marcador marcador = Marcador();
 }

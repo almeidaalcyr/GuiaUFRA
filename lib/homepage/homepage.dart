@@ -4,9 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:guiaufra/assets/provider.dart';
 import 'package:guiaufra/telas/tela_lista.dart';
-import 'package:provider/src/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'card_home.dart';
@@ -135,10 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Cardhome("Mapa", wg: TelaMapa(), icone: Icons.map_outlined, ),
                 Cardhome("Calendário\nAcadêmico", wg: TelaLista(Busca.evento), icone: Icons.date_range),
-                Cardhome("SIGAA", siteMobile: "https://sigaa.ufra.edu.br/sigaa/mobile/touch/login.jsf", siteDesktop: "https://autenticacao.ufra.edu.br/sso-server/login?service=http%3A%2F%2Fsigaa.ufra.edu.br%2Fsigaa%2Flogin%2Fcas", icone: Icons.school),
-                Cardhome("SIPAC", siteMobile: "https://sipac.ufra.edu.br/sipac/mobile/touch/public/principal.jsf", siteDesktop: "https://sipac.ufra.edu.br/public/jsp/portal.jsf", icone: Icons.school),
+                //Cardhome("SIGAA", siteMobile: "https://sigaa.ufra.edu.br/sigaa/mobile/touch/login.jsf", siteDesktop: "https://autenticacao.ufra.edu.br/sso-server/login?service=http%3A%2F%2Fsigaa.ufra.edu.br%2Fsigaa%2Flogin%2Fcas", icone: Icons.school),
+                //Cardhome("SIPAC", siteMobile: "https://sipac.ufra.edu.br/sipac/mobile/touch/public/principal.jsf", siteDesktop: "https://sipac.ufra.edu.br/public/jsp/portal.jsf", icone: Icons.school),
                 Cardhome("Contatos", wg: TelaLista(Busca.contato), icone: Icons.call),
-                Cardhome("GLPI", siteDesktop: "http://suporte.ufra.edu.br/glpi/plugins/formcreator/front/formdisplay.php?id=1", imagem: "glpi.png"),
+                //Cardhome("GLPI", siteDesktop: "http://suporte.ufra.edu.br/glpi/plugins/formcreator/front/formdisplay.php?id=1", imagem: "glpi.png"),
               ]
           )
       ),
