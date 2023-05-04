@@ -5,6 +5,7 @@ Makefile
 Makefile.in
 
 pubspec.lock
+secreto.dart
 
 android/
 build/

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
@@ -19,6 +20,16 @@ class TelaMapa extends StatefulWidget {
 }
 
 class _TelaMapaState extends State<TelaMapa> {
+  @override
+  void initState(){
+    super.initState();
+    Timer.run(() {
+      carregaMarcadores();
+      verificaGpsAtivoGeolocator();
+    });
+    Timer.periodic(Duration(seconds: intervaloAtualizacao), (Timer t) => setState(() {}));
+  }
+
   final int intervaloAtualizacao = 1;
   bool googleServices = true;// Usar google services para melhorar a precisão?
   MapController mapController = MapController();
@@ -26,7 +37,7 @@ class _TelaMapaState extends State<TelaMapa> {
   double currentZoom = 15.5;
   final double minZoom = 15.0;
   final double maxZoom = 18.0;
-  final double deltaZoom = 0.5;
+  final double intervaloZoom = 0.5;
   final LatLng center = geo.LatLng(-1.458039, -48.438787);
   //Limites NE e SW do campus Belém
   final LatLng nePanBoundary = geo.LatLng(-1.451167, -48.431376);
@@ -39,26 +50,20 @@ class _TelaMapaState extends State<TelaMapa> {
   late LocationPermission permissaoConcedida;
 
   void _zoomIn() {
-    if (currentZoom + deltaZoom <= maxZoom) {
-      currentZoom = currentZoom + deltaZoom;
-      mapController.move(mapController.center, currentZoom + deltaZoom);
+    if (currentZoom + intervaloZoom <= maxZoom) {
+      currentZoom = currentZoom + intervaloZoom;
+      mapController.move(mapController.center, currentZoom + intervaloZoom);
     }
   }
   void _zoomOut() {
-    if (currentZoom - deltaZoom >= minZoom) {
-      currentZoom = currentZoom - deltaZoom;
-      mapController.move(mapController.center, currentZoom - deltaZoom);
+    if (currentZoom - intervaloZoom >= minZoom) {
+      currentZoom = currentZoom - intervaloZoom;
+      mapController.move(mapController.center, currentZoom - intervaloZoom);
     }
   }
 
-  @override
-  void initState(){
-    super.initState();
-    Timer.run(() {
-      carregaMarcadores();
-      verificaGpsAtivoGeolocator();
-    });
-    Timer.periodic(Duration(seconds: intervaloAtualizacao), (Timer t) => setState(() {}));
+  void _norteReset(){
+    mapController.rotate(0);
   }
 
   carregaMarcadores() {
@@ -74,8 +79,8 @@ class _TelaMapaState extends State<TelaMapa> {
   }
 
   verificaGpsAtivoGeolocator() async {
-    var servicoAbilitado = await Geolocator.isLocationServiceEnabled();
-    if (!servicoAbilitado){
+    var servicoHabilitado = await Geolocator.isLocationServiceEnabled();
+    if (!servicoHabilitado){
       return Future.error('Location services are disabled.');
     }
     permissaoConcedida = await Geolocator.checkPermission();
@@ -98,14 +103,11 @@ class _TelaMapaState extends State<TelaMapa> {
         .getPositionStream(forceAndroidLocationManager: !googleServices)
         .distinct()
         .listen((Position position) {
-      double lat = position.latitude;
-      double lng = position.longitude;
-
       celular = Marker( //Cria o marcador com a localização do celular
           rotate: true,
           width: 80,
           height: 80,
-          point: geo.LatLng(lat, lng),
+          point: geo.LatLng(position.latitude, position.longitude),
           builder: (ctx) =>
               Container(
                 child: const Icon(
@@ -114,6 +116,9 @@ class _TelaMapaState extends State<TelaMapa> {
                   size: 20,),
               )
       );
+      setState(() {
+
+      });
     });
 
     //return Consumer<localizacao>(builder: (ctx, channel, _) {
@@ -188,6 +193,15 @@ class _TelaMapaState extends State<TelaMapa> {
                       child: const Icon(Icons.zoom_out),
                       onPressed: () => _zoomOut(),
                     ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.white),
+                        foregroundColor: MaterialStateProperty.all(Colors.black),
+                        overlayColor:  MaterialStateProperty.all(Colors.grey),
+                      ),
+                      child: const Icon(CupertinoIcons.location_north_line_fill),
+                      onPressed: () => _norteReset(),
+                    ),
                   ],
                 ),
               ),
@@ -198,7 +212,7 @@ class _TelaMapaState extends State<TelaMapa> {
             ]
         ),
 
-        /*floatingActionButton: FloatingActionButton.extended(
+        floatingActionButton: FloatingActionButton.extended(
           label: const Text("Pontos de interesse"),
           icon: const Icon(Icons.search,),
           onPressed: () {
@@ -214,12 +228,12 @@ class _TelaMapaState extends State<TelaMapa> {
             });
           },
           tooltip: 'Busca',
-        ),*/
-
+        ),
       );
     }
     );
   }
+
   @override
   void dispose() {
     super.dispose();

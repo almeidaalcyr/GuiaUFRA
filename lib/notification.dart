@@ -1,13 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'secreto.dart';
 import 'package:geodesy/geodesy.dart' as geo;
+import 'secreto.dart';
 
 class LocalizacaoBage extends ChangeNotifier {
-  String serverUrl = "";
+  String serverUrl = "ws://${Secreto.enderecoServidor}:${Secreto.portaServidor}";
   late WebSocketChannel channel;
+
   String _mensagem = "x";
   String get mensagem => _mensagem;
   final List <Marker> _bage = [Marker(
@@ -26,6 +28,8 @@ class LocalizacaoBage extends ChangeNotifier {
   List <Marker> get bage => _bage;
 
   LocalizacaoBage(){
+    print("Localizacao Bage");
+    print(serverUrl);
     channel = WebSocketChannel.connect(Uri.parse(serverUrl));
     try {
       channel.stream.listen(
@@ -36,6 +40,7 @@ class LocalizacaoBage extends ChangeNotifier {
   }
 
   onData(data) async {
+    print(data);
     final dataJson = jsonDecode(data);
     try{
       _bage.clear();
@@ -66,6 +71,7 @@ class LocalizacaoBage extends ChangeNotifier {
   onDone(){}
 
   onSend(msg){
+    print("onSend");
     try {
       channel.sink.add(msg);
     } catch (e){/**/}
