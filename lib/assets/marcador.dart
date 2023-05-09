@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geodesy/geodesy.dart' as geo;
+import 'dart:math' as math;
 
 class Marcador {
   static Marker getMarcador(
@@ -10,6 +11,7 @@ class Marcador {
         required String texto,
         required Color cor,
         required IconData icone,
+        angulo = 0,
       }
       )
   {
@@ -28,10 +30,13 @@ class Marcador {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15),
               ),
-              Icon(
-                icone,
-                color: cor,
-                size: 15,
+              Transform.rotate(
+                  angle: angulo * math.pi / 180,
+                  child: Icon(
+                    icone,
+                    color: cor,
+                    size: 15,
+                  )
               ),
               Text(
                 texto,
