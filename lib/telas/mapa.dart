@@ -1,24 +1,16 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
-import 'package:geodesy/geodesy.dart';
 import 'package:provider/provider.dart';
-import '../Cards/card_switch_contato.dart';
+import '../notifyers/gps.dart';
 import 'tela_lista.dart';
 import 'package:geolocator/geolocator.dart';
 import '../contato.dart';
-import '../assets/marcador.dart';
 import '../assets/mapa_offline.dart';
-import '../notification.dart';
-
-
-/*
-  TODO: Identificar se o Bagé passa ou não pela Zootecnia;
-*/
+import '../notifyers/webSocket.dart';
 
 class TelaMapa extends StatefulWidget {
   const TelaMapa({super.key});
@@ -35,23 +27,21 @@ class _TelaMapaState extends State<TelaMapa> {
       carregaMarcadores();
       verificaGpsAtivoGeolocator();
     });
-    Timer.periodic(Duration(seconds: intervaloAtualizacao), (Timer t) => setState(() {}));
+    Timer.periodic(Duration(seconds: intervaloAtualizacao), (Timer t) => setState(() { print("setState");}));
   }
 
   final int intervaloAtualizacao = 1;
-  bool googleServices = true;// Usar google services para melhorar a precisão?
   MapController mapController = MapController();
   //Atributos do mapa
   double currentZoom = 15.5;
   final double minZoom = 15.0;
   final double maxZoom = 18.0;
   final double intervaloZoom = 0.5;
-  final LatLng center = geo.LatLng(-1.458039, -48.438787);
+  final geo.LatLng center = geo.LatLng(-1.458039, -48.438787);
   //Limites NE e SW do campus Belém
-  final LatLng nePanBoundary = geo.LatLng(-1.451167, -48.431376);
-  final LatLng swPanBoundary = geo.LatLng(-1.464912, -48.446199);
+  final geo.LatLng nePanBoundary = geo.LatLng(-1.451167, -48.431376);
+  final geo.LatLng swPanBoundary = geo.LatLng(-1.464912, -48.446199);
   //Marcadores
-  Marker celular = Marcador.getMarcador(latitude: 0, longitude: 0, texto: " ", cor: Colors.blue, icone: Icons.circle);
   List <Marker> marcadores = [];
 
   late LocationPermission permissaoConcedida;
@@ -59,13 +49,13 @@ class _TelaMapaState extends State<TelaMapa> {
   void _zoomIn() {
     if (currentZoom + intervaloZoom <= maxZoom) {
       currentZoom = currentZoom + intervaloZoom;
-      mapController.move(mapController.center, currentZoom + intervaloZoom);
+      mapController.move(mapController.center, currentZoom);
     }
   }
   void _zoomOut() {
     if (currentZoom - intervaloZoom >= minZoom) {
       currentZoom = currentZoom - intervaloZoom;
-      mapController.move(mapController.center, currentZoom - intervaloZoom);
+      mapController.move(mapController.center, currentZoom);
     }
   }
   void _norteReset(){
@@ -102,39 +92,13 @@ class _TelaMapaState extends State<TelaMapa> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    // Atualiza as coordenadas locais em tempo real.
-    try {
-      if (permissaoConcedida == LocationPermission.always ||
-          permissaoConcedida == LocationPermission.whileInUse) {
-        StreamSubscription<Position> positionStream = Geolocator
-            .getPositionStream(forceAndroidLocationManager: !googleServices)
-            .distinct()
-            .listen((Position position) {
-          celular = Marker( //Cria o marcador com a localização do celular
-              rotate: true,
-              width: 80,
-              height: 80,
-              point: geo.LatLng(position.latitude, position.longitude),
-              builder: (ctx) =>
-                  Container(
-                    child: const Icon(
-                      Icons.circle,
-                      color: Colors.blue,
-                      size: 20,),
-                  )
-          );
-          setState(() {});
-        });
-      }
-    }catch (e){/**/}
+    final webSocket = Provider.of<WebSocket>(context, listen: true);
+    final gps = Provider.of<Gps>(context, listen: true);
 
-    //return Consumer<localizacao>(builder: (ctx, channel, _) {
-    return Consumer<LocalizacaoBage>(builder: (ctx, webSocket, _) {
-      return Scaffold(
-        /*appBar: AppBar(
+    return Scaffold(
+      /*appBar: AppBar(
           title: const Text("Guia UFRA - Campus Belém"),
           actions: <Widget>[
             IconButton(
@@ -149,116 +113,121 @@ class _TelaMapaState extends State<TelaMapa> {
           ],
         ),*/
 
-        body: Stack(
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: Listener( // zoom no centro da tela. não funciona no celular
-                  onPointerSignal: (pointerSignal) {
-                    if (pointerSignal is PointerScrollEvent){
-                      if (pointerSignal.scrollDelta.dy < 0) {
-                        mapController.move(mapController.center, mapController.zoom+1);
-                      } else {
-                        mapController.move(mapController.center, mapController.zoom-1);
-                      }
+      body: Stack(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Listener( // zoom no centro da tela. não funciona no celular
+                onPointerSignal: (pointerSignal) {
+                  if (pointerSignal is PointerScrollEvent){
+                    if (pointerSignal.scrollDelta.dy < 0) {
+                      mapController.move(mapController.center, mapController.zoom+1);
+                    } else {
+                      mapController.move(mapController.center, mapController.zoom-1);
                     }
-                  },
-                  child: FlutterMap(
-                    mapController: mapController,
-                    options: MapOptions(
-                      center: center,
-                      zoom: currentZoom,
-                      minZoom: minZoom,
-                      maxZoom: maxZoom,
-                      nePanBoundary: nePanBoundary,
-                      swPanBoundary: swPanBoundary,
-                      slideOnBoundaries: true,
+                  }
+                },
+                child: FlutterMap(
+                  mapController: mapController,
+                  options: MapOptions(
+                    center: center,
+                    zoom: currentZoom,
+                    minZoom: minZoom,
+                    maxZoom: maxZoom,
+                    nePanBoundary: nePanBoundary,
+                    swPanBoundary: swPanBoundary,
+                    slideOnBoundaries: true,
+                  ),
+                  layers: [
+                    TileLayerOptions(
+                        urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        subdomains: ['a', 'b', 'c'],
+                        tileProvider: const CachedTileProvider()
                     ),
-                    layers: [
-                      TileLayerOptions(
-                          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                          subdomains: ['a', 'b', 'c'],
-                          tileProvider: const CachedTileProvider()
-                      ),
-                      MarkerLayerOptions(
-                        markers: [
-                          celular,
-                          ...webSocket.bage,
-                          ...marcadores,
-                        ],
-                      ),
-                    ],
-                  ),
+                    MarkerLayerOptions(
+                      markers: [
+                        gps.marcador,
+                        ...webSocket.bage,
+                        ...marcadores,
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 50,),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(40,40),
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white,
-                        ),
-                        child: const Icon(Icons.zoom_in_map, size: 15),
-                        onPressed: () => _zoomIn(),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 50,),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(40,40),
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(40,40),
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white,
-                        ),
-                        child: const Icon(Icons.zoom_out_map, size: 15),
-                        onPressed: () => _zoomOut(),
+                      child: const Icon(Icons.zoom_in_map, size: 15),
+                      onPressed: () => _zoomIn(),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(40,40),
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(40,40),
-                          foregroundColor: Colors.black,
-                          backgroundColor: Colors.white,
-                        ),
-                        child: const Icon(CupertinoIcons.location_north_line_fill, size: 15),
-                        onPressed: () => _norteReset(),
+                      child: const Icon(Icons.zoom_out_map, size: 15),
+                      onPressed: () => _zoomOut(),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(40,40),
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
                       ),
-                    ],
-                  ),
+                      child: const Icon(CupertinoIcons.location_north_line_fill, size: 15),
+                      onPressed: () => _norteReset(),
+                    ),
+                  ],
                 ),
               ),
+            ),
 
-              //CardSwitchContato(2, "widget.textoBusca[indice]"),
+            //CardSwitchContato(2, "widget.textoBusca[indice]"),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(webSocket.alerta,
+                style: TextStyle(color: Colors.red, fontSize: 20, backgroundColor: Colors.white),),
+            ),
 
-              const Align(
-                alignment: Alignment.bottomRight,
-                child: Text("© OpenStreetMap contributors"),
-              ),
-            ]
-        ),
+            const Align(
+              alignment: Alignment.bottomRight,
+              child: Text("© OpenStreetMap contributors", ),
+            ),
+          ]
+      ),
 
-        floatingActionButton: FloatingActionButton(//.extended(
-          onPressed: () {
-            webSocket.onSend("x");
-            Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (_){
-                      return TelaLista(Busca.localizacao);
-                    }
-                )
-            ).then((_){
-              carregaMarcadores();
-            });
-          },
-          tooltip: 'Busca',//.extended(
-          child: const Icon(Icons.search,),
-        ),
-      );
-    }
+      floatingActionButton: FloatingActionButton(//.extended(
+        onPressed: () {
+          //webSocket.onSend("x");
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (_){
+                    return TelaLista(Busca.localizacao);
+                  }
+              )
+          ).then((_){
+            carregaMarcadores();
+          });
+        },
+        tooltip: 'Busca',//.extended(
+        child: const Icon(Icons.search,),
+      ),
     );
   }
+  /*);
+  }*/
 
   @override
   void dispose() {

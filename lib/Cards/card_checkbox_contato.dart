@@ -1,7 +1,6 @@
 //import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:guiaufra/Cards/card_exibir_contato.dart';
 import '../contato.dart';
 
 class CardCheckboxContato extends StatefulWidget{

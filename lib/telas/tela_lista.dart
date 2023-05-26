@@ -94,7 +94,6 @@ class _TelaListaState extends State<TelaLista> {
   }
 
   Widget build(BuildContext context) {
-    print(Evento.eventos.length);
     //print(Contato.contato[1].sigla);
     return Scaffold(
         appBar: AppBar(

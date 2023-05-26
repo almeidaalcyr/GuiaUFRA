@@ -45,9 +45,7 @@ dependencies:
   appbar_textfield: ^1.0.1+1
   web_socket_channel: ^2.3.0
   provider: ^6.0.5
-#  build_runner: ^1.6.2
-#  build_web_compilers: ^2.0.0
-#  dart_ipify: ^1.1.1
+  flutter_svg: any
 
 
 

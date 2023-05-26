@@ -1,30 +1,22 @@
-// import 'dart:async';
-// import 'dart:convert';
-// import 'dart:developer';
-
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:guiaufra/notifyers/gps.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'contato.dart';
-import 'evento.dart';
-import 'notification.dart';
-
-// import 'assets/provider.dart';
-import 'homepage/homepage.dart';
+import 'notifyers/webSocket.dart';
 import 'telas/mapa.dart';
 
 void main() {
-  runApp(/*MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => ProviderClasse()),
-  ], child: const MyApp())*/
-  const MyApp());
+  Provider.debugCheckInvalidValueType = null;
+  runApp(
+      const MyApp()
+  );
 }
 
-List <dynamic> calendario = [];
+//List <dynamic> calendario = [];
 List <dynamic> contato = [];
 List <String>? exibirPOI= [];
 List <bool> exibirPOIb = [];
@@ -33,7 +25,7 @@ carregaJSON() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   // Carrega o calendario academico do JSON
-  await rootBundle.loadString('assets/calendarioacademico2021.json').then((value) {
+  /*await rootBundle.loadString('assets/calendarioacademico2021.json').then((value) {
     calendario = json.decode(value);
     calendario.map((e) {
       Evento.eventos.add(Evento(
@@ -45,7 +37,7 @@ carregaJSON() async {
 
     }).toList();
 
-  });
+  });*/
 
   // Carrega a lista de contatos do JSON
   await rootBundle.loadString('assets/localizacao.json').then((value) {
@@ -71,9 +63,9 @@ carregaJSON() async {
     }).toList();
 
 
-      Contato.contato.sort((a,b) => a.nome.compareTo(b.nome));
-      contato.sort((a,b) => a["nome"].compareTo(b["nome"]));
-      Contato.nomeSigla.sort();
+    Contato.contato.sort((a,b) => a.nome.compareTo(b.nome));
+    contato.sort((a,b) => a["nome"].compareTo(b["nome"]));
+    Contato.nomeSigla.sort();
 
 
     //Verifica se o "exibirPOI" existe. se não, cria ele
@@ -91,7 +83,6 @@ carregaJSON() async {
     }
 
     for (int i = 0; i < exibirPOI!.length; i++) {
-      print(exibirPOI![i]);
       if (exibirPOI![i] == "1") {
         Contato.contato[i].exibirNoMapa = true;
       }
@@ -108,21 +99,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     carregaJSON();
-    return ChangeNotifierProvider<LocalizacaoBage>(
-        create: (ctx) => (LocalizacaoBage()),
-    child:MaterialApp(
-      title: 'Guia UFRA',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Colors.blue),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.blue,
-        ),
-        primarySwatch: Colors.blue,
-      ),
-      //home: Teste(),
-      home: TelaMapa(), //Teste(),//TelaMapa(), //MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
-      debugShowCheckedModeBanner: false,
-    )
+    return /*ChangeNotifierProvider<WebSocket>(create: (ctx) => (WebSocket()),*/ MultiProvider(
+        providers: [
+          Provider<WebSocket>(create: (ctx) => (WebSocket())),
+          Provider<Gps>(create: (ctx) => (Gps())),
+        ],
+
+        child: MaterialApp(
+          title: 'Guia UFRA',
+          theme: ThemeData(
+            appBarTheme: const AppBarTheme(color: Colors.blue),
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: Colors.blue,
+            ),
+            primarySwatch: Colors.blue,
+          ),
+          //home: Teste(),
+          home: TelaMapa(), //Teste(),//TelaMapa(), //MyHomePage(title: 'Guia UFRA'),//TelaMapa(),
+          debugShowCheckedModeBanner: false,
+        )
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geodesy/geodesy.dart' as geo;
 import 'dart:math' as math;
@@ -11,7 +12,8 @@ class Marcador {
         required String texto,
         required Color cor,
         required IconData icone,
-        angulo = 0,
+        double angulo = 0,
+        double tamanho = 20,
       }
       )
   {
@@ -35,7 +37,7 @@ class Marcador {
                   child: Icon(
                     icone,
                     color: cor,
-                    size: 15,
+                    size: tamanho,
                   )
               ),
               Text(

@@ -185,7 +185,7 @@ class Contato {
         return Icons.school;
       default:
       //return Icons.link;
-        return Icons.circle_sharp;
+        return Icons.pin_drop;
     }
   }
 
@@ -198,7 +198,7 @@ class Contato {
       case 'vermelho':
         return Colors.red;
       default:
-        return Colors.black;
+        return Colors.blueGrey;
     }
   }
 }
