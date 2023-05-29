@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:guiaufra/Cards/card_calendario.dart';
+import 'package:guiaufra/antigos/cards/card_calendario.dart';
 import 'package:guiaufra/Cards/card_switch_contato.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Cards/card_checkbox_contato.dart';
 import 'package:provider/src/provider.dart';
-import '../contato.dart';
-import '../Cards/card_contato.dart';
-import '../evento.dart';
+import '../antigos/contato.dart';
+import '../antigos/cards/card_contato.dart';
+import '../antigos/cards/evento.dart';
 
 class TelaLista extends StatefulWidget {
   bool barraBusca = false;

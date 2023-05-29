@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
-import '../contato.dart';
+import '../antigos/contato.dart';
 
 class CardSwitchContato extends StatefulWidget{
   int indice;

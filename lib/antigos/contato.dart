@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
-import 'assets/marcador.dart';
+import '../assets/marcador.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Contato {

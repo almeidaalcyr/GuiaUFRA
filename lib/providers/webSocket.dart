@@ -32,6 +32,7 @@ class WebSocket extends ChangeNotifier {
   connect() {
     print("onConnect");
     channel = WebSocketChannel.connect(Uri.parse(serverUrl), );
+
     try {
       channel.stream.listen(
             (data) => onData(data),

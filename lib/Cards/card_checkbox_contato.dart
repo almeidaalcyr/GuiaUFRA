@@ -1,7 +1,7 @@
 //import 'dart:js';
 
 import 'package:flutter/material.dart';
-import '../contato.dart';
+import '../antigos/contato.dart';
 
 class CardCheckboxContato extends StatefulWidget{
   int indice;

@@ -5,11 +5,11 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:guiaufra/Cards/card_switch_contato.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Cards/card_checkbox_contato.dart';
-import '../Cards/card_link_contato.dart';
+import '../../Cards/card_checkbox_contato.dart';
+import '../cards/card_link_contato.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../Cards/card_rede_social.dart';
-import '../main.dart';
+import '../cards/card_rede_social.dart';
+import '../../main.dart';
 import '../contato.dart';
 
 class TelaDetalhesContato extends StatefulWidget {

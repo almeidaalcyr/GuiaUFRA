@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../assets/divisor.dart';
-import '../evento.dart';
+import 'evento.dart';
 
 class CardCalendario extends StatelessWidget {
   late int indice;

@@ -7,11 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:guiaufra/telas/tela_lista.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'card_home.dart';
-import '../contato.dart';
-import '../evento.dart';
+import '../antigos/homepage/card_home.dart';
+import '../antigos/contato.dart';
+import '../antigos/cards/evento.dart';
 import '../telas/mapa.dart';
-import '../telas/tela_paginaweb.dart';
+import '../antigos/telas/tela_paginaweb.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);

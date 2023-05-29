@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:guiaufra/Cards/card_icone_rede_social.dart';
+import 'package:guiaufra/antigos/cards/card_icone_rede_social.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../contato.dart';
 

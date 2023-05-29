@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:guiaufra/notifyers/gps.dart';
+import 'package:guiaufra/providers/gps.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'contato.dart';
-import 'notifyers/webSocket.dart';
-import 'telas/mapa.dart';
+import 'package:guiaufra/antigos/contato.dart';
+import 'package:guiaufra/providers/webSocket.dart';
+import 'package:guiaufra/telas/mapa.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;

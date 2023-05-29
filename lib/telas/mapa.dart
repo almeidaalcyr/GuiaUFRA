@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geodesy/geodesy.dart' as geo;
 import 'package:provider/provider.dart';
-import '../notifyers/gps.dart';
+import '../providers/gps.dart';
 import 'tela_lista.dart';
 import 'package:geolocator/geolocator.dart';
-import '../contato.dart';
+import '../antigos/contato.dart';
 import '../assets/mapa_offline.dart';
-import '../notifyers/webSocket.dart';
+import '../providers/webSocket.dart';
 
 class TelaMapa extends StatefulWidget {
   const TelaMapa({super.key});
